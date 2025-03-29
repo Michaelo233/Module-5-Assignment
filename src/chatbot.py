@@ -110,9 +110,48 @@ def chatbot():
     # Print welcome message
     print(f"Welcome! I'm the {COMPANY_NAME} Chatbot! "
           f"Let's get chatting!")
+    
+    exit_task = False
 
-    # Print thank you message
-    print(f"Thank you for banking with {COMPANY_NAME}.")
+    while exit_task == False:
+        try:
+            account_option = get_task()
+        except ValueError as e:
+            print(e)
+            continue
+
+        if account_option == "exit":
+            exit_task = True
+            # Print thank you message
+            print(f"Thank you for banking with {COMPANY_NAME}.")
+            continue
+
+        try:
+            account_num = get_account_number()
+        except (TypeError, ValueError) as e:
+            print(e)
+            continue
+    
+        if account_option == "deposit":
+            try:
+                amount = get_amount()
+            except (TypeError, ValueError) as e:
+                print(e)     
+        
+            try:
+                print(make_deposit(account_num, amount))
+            except (ValueError, TypeError) as e:
+                print(e)
+
+        elif account_option == "balance":
+            try:  
+                print(get_balance(account_num))
+            except (ValueError,TypeError) as e:
+                print(e)
+        else:
+            exit_task = True
+
 
 if __name__ == "__main__":
     chatbot()
+
