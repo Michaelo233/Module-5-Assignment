@@ -79,7 +79,7 @@ def make_deposit(account_num: int, amount: float) -> str:
     except ValueError:
         raise TypeError("Account number must be an int type.")
     try:
-        amount = float(amount)
+        amount = int(float(amount))
     except ValueError:
         raise ValueError("Amount must be a numeric type.")
     
@@ -94,6 +94,14 @@ def make_deposit(account_num: int, amount: float) -> str:
         ACCOUNTS[account_num]["balance"] += amount
 
     return message
+
+# get tast function.
+def get_task():
+    account_option = input("What would you like to do (balance/deposit/exit)?: ").lower()
+    if account_option not in VALID_TASKS:
+        raise ValueError(f'"{account_option}" is an unknown task')
+    
+    return account_option
 
 def chatbot():
     """Performs the Chatbot functionality."""
