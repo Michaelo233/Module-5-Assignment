@@ -46,7 +46,8 @@ def get_account_number() -> int:
     
     return account_num
 
-def get_amount():
+# Get amount function.
+def get_amount() -> float:
     try:
         input_amount = float(input("Enter an amount: "))
     except ValueError:
@@ -55,6 +56,20 @@ def get_amount():
         raise ValueError("Amount must be a value greater than zero.")
         
     return input_amount
+
+# Get balance function.
+def get_balance(account_num: int):
+    try:
+        account_num = int(account_num)
+    except ValueError:
+        raise TypeError("Account number must be an int type.")
+    if account_num not in ACCOUNTS:
+        raise ValueError("Account number does not exist.")
+    else:
+        account_balance = ACCOUNTS[account_num]["balance"]
+        message = f"Your current balance for account {account_num} is ${account_balance:,.2f}."
+        
+    return message
 
 def chatbot():
     """Performs the Chatbot functionality."""
