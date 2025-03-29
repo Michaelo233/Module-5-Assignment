@@ -46,6 +46,16 @@ def get_account_number() -> int:
     
     return account_num
 
+def get_amount():
+    try:
+        input_amount = float(input("Enter an amount: "))
+    except ValueError:
+        raise TypeError("Amount must be a numeric type.")
+    if input_amount <= 0:
+        raise ValueError("Amount must be a value greater than zero.")
+        
+    return input_amount
+
 def chatbot():
     """Performs the Chatbot functionality."""
     COMPANY_NAME = "PiXELL River Financial"
