@@ -17,7 +17,7 @@ from unittest import TestCase, main
 from unittest.mock import patch
 from src.chatbot import ACCOUNTS, VALID_TASKS
 from src.chatbot import (get_account_number, get_amount, get_balance,
-                         make_deposit)
+                         make_deposit, get_task)
 
 class Testchatbot(unittest.TestCase):
 # test if the get account number raises a typeerror.
@@ -236,3 +236,31 @@ class Testchatbot(unittest.TestCase):
         # Assert
         self.assertEqual(expected, actual)
 
+# test if get task raises a valueerror if account don't exist.
+    def test_get_task_raise_value_error(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["withdraw"]
+            expected = '"withdraw" is an unknown task'
+
+            # Act
+            with self.assertRaises(ValueError) as context:
+                get_task()
+
+            # Assert
+            self.assertEqual(expected, str(context.exception))
+
+# test if get task function returns valid message.
+
+    def test_get_task(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["deposit"]
+            expected = "deposit"
+
+            # Act
+            
+            actual = get_task()
+
+            # Assert
+            self.assertEqual(expected, actual)
