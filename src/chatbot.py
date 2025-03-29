@@ -71,6 +71,30 @@ def get_balance(account_num: int):
         
     return message
 
+# Make deposit function.
+
+def make_deposit(account_num: int, amount: float) -> str:
+    try:
+        account_num = int(account_num)
+    except ValueError:
+        raise TypeError("Account number must be an int type.")
+    try:
+        amount = float(amount)
+    except ValueError:
+        raise ValueError("Amount must be a numeric type.")
+    
+    if account_num not in ACCOUNTS:
+        raise ValueError("Account number does not exist.")
+    
+    if amount <= 0:
+        raise ValueError("Amount must be a value greater than zero.")
+    
+    else:
+        message = f"You have made a deposit of ${amount:,.2f} to account {account_num}."
+        ACCOUNTS[account_num]["balance"] += amount
+
+    return message
+
 def chatbot():
     """Performs the Chatbot functionality."""
     COMPANY_NAME = "PiXELL River Financial"
