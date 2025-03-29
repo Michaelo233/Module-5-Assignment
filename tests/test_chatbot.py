@@ -16,7 +16,7 @@ import unittest
 from unittest import TestCase, main
 from unittest.mock import patch
 from src.chatbot import ACCOUNTS, VALID_TASKS
-from src.chatbot import get_account_number
+from src.chatbot import get_account_number, get_amount
 
 class Testchatbot(unittest.TestCase):
 # test if the get account number raises a typeerror.
@@ -58,4 +58,58 @@ class Testchatbot(unittest.TestCase):
 
             # Assert
             self.assertEqual(expected, actual)
-            
+
+# test if get amount raises typeerror          
+    def test_get_amount_raise_type_error(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["knmsk"]
+            expected = "Amount must be a numeric type."
+
+            # Act
+            with self.assertRaises(TypeError) as context:
+                get_amount()
+
+            # Assert
+            self.assertEqual(expected, str(context.exception))
+
+# test if amount is equal to 0 and raise valueerror.  
+    def test_get_amount_raise_value_error(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["0"]
+            expected = "Amount must be a value greater than zero."
+
+            # Act
+            with self.assertRaises(ValueError) as context:
+                get_amount()
+
+            # Assert
+            self.assertEqual(expected, str(context.exception))
+
+# test if amount is less than 0 and raise a valueerror
+    def test_get_amount_raise_value_error(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["-4444"]
+            expected = "Amount must be a value greater than zero."
+
+            # Act
+            with self.assertRaises(ValueError) as context:
+                get_amount()
+
+            # Assert
+            self.assertEqual(expected, str(context.exception))
+
+# test if get_amount returns a valid amount.
+    def test_get_amount(self):
+        with patch('builtins.input') as mock_input:
+            # Arrange
+            mock_input.side_effect = ["1234"]
+            expected = 1234
+
+            # Act
+            actual = get_amount()
+
+            # Assert
+            self.assertEqual(expected, actual)
